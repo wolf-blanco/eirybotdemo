@@ -1,0 +1,184 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_instruct",
+                    "type": "text",
+                    "text": {
+                        "es": "Espero que te estés recuperando bien. Aquí tienes algunas recomendaciones.",
+                        "en": "I hope you are recovering well. Here are some recommendations."
+                    },
+                    "next": "flow_instructions"
+                }
+            ]
+        },
+        {
+            "id": "flow_instructions",
+            "steps": [
+                {
+                    "id": "instruct_menu",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿Qué tratamiento te realizaste hoy?",
+                        "en": "What treatment did you have today?"
+                    },
+                    "options": [
+                        {
+                            "value": "cleaning",
+                            "label": {
+                                "es": "Limpieza",
+                                "en": "Cleaning"
+                            }
+                        },
+                        {
+                            "value": "extraction",
+                            "label": {
+                                "es": "Extracción / Muela",
+                                "en": "Extraction"
+                            }
+                        },
+                        {
+                            "value": "whitening",
+                            "label": {
+                                "es": "Blanqueamiento",
+                                "en": "Whitening"
+                            }
+                        },
+                        {
+                            "value": "endo",
+                            "label": {
+                                "es": "Endodoncia / Conducto",
+                                "en": "Root Canal"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "cleaning",
+                            "next": "flow_inst_cleaning"
+                        },
+                        {
+                            "value": "extraction",
+                            "next": "flow_inst_extraction"
+                        },
+                        {
+                            "value": "whitening",
+                            "next": "flow_inst_whitening"
+                        },
+                        {
+                            "value": "endo",
+                            "next": "flow_inst_endo"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_cleaning",
+            "steps": [
+                {
+                    "id": "txt_clean",
+                    "type": "text",
+                    "text": {
+                        "es": "*Limpieza:* Puedes comer normal, pero evita alimentos muy duros o calientes por 2 horas si hubo flúor.",
+                        "en": "*Cleaning:* You can eat normally, but avoid very hard or hot foods for 2 hours if fluoride was applied."
+                    },
+                    "next": "flow_inst_disclaimer"
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_extraction",
+            "steps": [
+                {
+                    "id": "txt_ext",
+                    "type": "text",
+                    "text": {
+                        "es": "*Extracción:* Muerde la gasa 30 min. Dieta blanda y fría hoy. No uses popote (pajilla) y no escupas fuerte.",
+                        "en": "*Extraction:* Bite the gauze for 30 min. Soft and cold diet today. Do not use a straw and do not spit forcefully."
+                    },
+                    "next": "flow_inst_disclaimer"
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_whitening",
+            "steps": [
+                {
+                    "id": "txt_white",
+                    "type": "text",
+                    "text": {
+                        "es": "*Blanqueamiento:* Evita café, vino, té y salsas rojas por 48 horas. Tus dientes pueden estar sensibles.",
+                        "en": "*Whitening:* Avoid coffee, wine, tea, and red sauces for 48 hours. Your teeth may be sensitive."
+                    },
+                    "next": "flow_inst_disclaimer"
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_endo",
+            "steps": [
+                {
+                    "id": "txt_endo",
+                    "type": "text",
+                    "text": {
+                        "es": "*Endodoncia:* Espera a que pase la anestesia para masticar. Si hay mucho dolor, toma el analgésico recetado.",
+                        "en": "*Root Canal:* Wait for the anesthesia to wear off before chewing. If there is severe pain, take the prescribed painkiller."
+                    },
+                    "next": "flow_inst_disclaimer"
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_disclaimer",
+            "steps": [
+                {
+                    "id": "txt_discl",
+                    "type": "text",
+                    "text": {
+                        "es": "⚠️ Importante: Estas son recomendaciones generales. Si tienes fiebre, sangrado excesivo o dudas, llama a la clínica.",
+                        "en": "⚠️ Important: These are general recommendations. If you have fever, excessive bleeding, or doubts, call the clinic."
+                    },
+                    "next": "flow_inst_loop"
+                }
+            ]
+        },
+        {
+            "id": "flow_inst_loop",
+            "steps": [
+                {
+                    "id": "ask_more_instruct",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Necesitas consultar algo más?",
+                        "en": "Do you need to check anything else?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Ver otro tratamiento",
+                                "en": "Check another"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "Salir",
+                                "en": "Exit"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_instructions"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

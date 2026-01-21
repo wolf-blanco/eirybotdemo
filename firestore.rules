@@ -1,0 +1,116 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helpers
+    function signedIn() {
+      return request.auth != null;
+    }
+    function myUid() {
+      return request.auth.uid;
+    }
+    function myUserDoc() {
+      return get(/databases/$(database)/documents/usuarios/$(myUid()));
+    }
+    function myRole() {
+      return myUserDoc().data.rol;
+    }
+    function myCliente() {
+      return myUserDoc().data.cliente_id;
+    }
+    function myEmail() {
+      return request.auth.token.email;
+    }
+
+    // --- Usuarios ---
+    match /usuarios/{uid} {
+      allow read, update, delete: if signedIn() && uid == myUid();
+      allow create: if signedIn() && uid == myUid();
+    }
+
+    // --- Clientes ---
+    match /clientes/{clienteId} {
+      allow read: if signedIn() && (
+        myRole() == "admin" ||
+        (myCliente() != null && myCliente() == clienteId) ||
+        // fallback por email (si todavía no quedó seteado myCliente())
+        (get(/databases/$(database)/documents/clientes/$(clienteId)).data.email == myEmail())
+      );
+      allow write: if signedIn() && myRole() == "admin";
+    }
+
+    // --- Facturas ---
+    match /facturas/{facturaId} {
+      allow read: if signedIn() && (
+        myRole() == "admin" ||
+        // caso “ideal”: usuario cuyo cliente coincide con la factura
+        resource.data.cliente_id == myCliente() ||
+        // fallback seguro: el email del user coincide con el email del cliente dueño de la factura
+        get(/databases/$(database)/documents/clientes/$(resource.data.cliente_id)).data.email == myEmail()
+      );
+      // crea/edita/borra facturas solo desde el backend (Admin SDK)
+      allow write: if signedIn() && myRole() == "admin";
+    }
+
+    // — INICIO BLOQUE NUEVO (Existente) —
+    // rules para datos públicos del sitio eirybot_site (con guion bajo)
+    match /eirybot_site/{env}/{collection}/{doc} {
+      // Solo permitimos crear documentos en prod
+      allow create: if env == "prod" && (
+        (
+          collection == "web_leads" &&
+          request.resource.data.email is string &&
+          request.resource.data.createdAt is timestamp
+        ) ||
+        (
+          collection == "unsubscribes" &&
+          request.resource.data.email is string &&
+          request.resource.data.createdAt is timestamp
+        ) ||
+        (
+          collection == "eiryscan_results" &&
+          request.resource.data.createdAt is timestamp
+        ) ||
+        (
+          collection == "site_events" &&
+          request.resource.data.event is string &&
+          request.resource.data.createdAt is timestamp
+        ) ||
+        (
+          collection == "error_log" &&
+          request.resource.data.message is string &&
+          request.resource.data.createdAt is timestamp
+        )
+      );
+
+      // ✅ lectura: SOLO usuarios admin del panel
+      allow read: if signedIn() && myRole() == "admin";
+
+      // ❌ nunca desde el cliente
+      allow update, delete: if false;
+    }
+    // — FIN BLOQUE NUEVO —
+
+
+    // --- EIRYBOT DEMO (NUEVO) ---
+    // Usamos 'eirybot-site' (con guion medio) para la demo, según la implementación actual.
+    // Esto permite que la demo funcione públicamente sin afectar eirybot_site (prod).
+    
+    match /eirybot-site/root/eirybot_demo_sessions/{sessionId} {
+      allow read, write: if true;
+    }
+    match /eirybot-site/root/eirybot_demo_events/{eventId} {
+      allow read, write: if true;
+    }
+
+
+    // --- Otras colecciones ligadas a clientes ---
+    match /{col}/{doc} {
+      allow read: if signedIn() && (
+        myRole() == "admin" ||
+        (resource.data.cliente_id != null && resource.data.cliente_id == myCliente())
+      );
+      allow write: if signedIn() && myRole() == "admin";
+    }
+  }
+}

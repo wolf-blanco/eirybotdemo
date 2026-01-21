@@ -1,0 +1,179 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_faq",
+                    "type": "text",
+                    "text": {
+                        "es": "...",
+                        "en": "..."
+                    },
+                    "next": "flow_faqs"
+                }
+            ]
+        },
+        {
+            "id": "flow_faqs",
+            "steps": [
+                {
+                    "id": "faq_menu",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿Sobre qué tema tienes dudas?",
+                        "en": "What topic do you have questions about?"
+                    },
+                    "options": [
+                        {
+                            "value": "general",
+                            "label": {
+                                "es": "Preguntas Comunes",
+                                "en": "Common Questions"
+                            }
+                        },
+                        {
+                            "value": "location",
+                            "label": {
+                                "es": "Horarios y Ubicación",
+                                "en": "Hours & Location"
+                            }
+                        },
+                        {
+                            "value": "payments",
+                            "label": {
+                                "es": "Seguros y Pagos",
+                                "en": "Insurance & Payments"
+                            }
+                        },
+                        {
+                            "value": "reception",
+                            "label": {
+                                "es": "Hablar con Recepción",
+                                "en": "Speak to Reception"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "general",
+                            "next": "flow_faq_general"
+                        },
+                        {
+                            "value": "location",
+                            "next": "flow_faq_location"
+                        },
+                        {
+                            "value": "payments",
+                            "next": "flow_faq_payments"
+                        },
+                        {
+                            "value": "reception",
+                            "next": "flow_faq_reception"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_general",
+            "steps": [
+                {
+                    "id": "ans_gen",
+                    "type": "text",
+                    "text": {
+                        "es": "Realizamos limpiezas, extracciones, ortodoncia y estética dental. Todo con tecnología de punta.",
+                        "en": "We perform cleanings, extractions, orthodontics, and cosmetic dentistry. All with state-of-the-art technology."
+                    },
+                    "next": "flow_loop_ask"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_location",
+            "steps": [
+                {
+                    "id": "ans_loc",
+                    "type": "text",
+                    "text": {
+                        "es": "Estamos abiertos de Lunes a Viernes de 9am a 7pm. Nos ubicamos en el Centro Médico, Piso 3.",
+                        "en": "We are open Mon-Fri from 9am to 7pm. We are located at the Medical Center, 3rd Floor."
+                    },
+                    "next": "flow_loop_ask"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_payments",
+            "steps": [
+                {
+                    "id": "ans_pay",
+                    "type": "text",
+                    "text": {
+                        "es": "Aceptamos todas las tarjetas de crédito y seguros mayores. Ofrecemos planes de pago.",
+                        "en": "We accept all major credit cards and insurance. We offer payment plans."
+                    },
+                    "next": "flow_loop_ask"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_reception",
+            "steps": [
+                {
+                    "id": "ans_recep",
+                    "type": "text",
+                    "text": {
+                        "es": "Claro, te pondré en contacto con mi equipo humano.",
+                        "en": "Sure, I'll put you in touch with our human team."
+                    },
+                    "next": "flow_handoff_only"
+                }
+            ]
+        },
+        {
+            "id": "flow_loop_ask",
+            "steps": [
+                {
+                    "id": "faq_another",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Tienes alguna otra duda?",
+                        "en": "Do you have another question?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí",
+                                "en": "Yes"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No, gracias",
+                                "en": "No, thanks"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_faqs"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_handoff_only",
+            "steps": [
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

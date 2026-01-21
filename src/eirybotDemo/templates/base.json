@@ -1,0 +1,92 @@
+{
+    "flows": [
+        {
+            "id": "main",
+            "steps": [
+                {
+                    "id": "welcome_1",
+                    "type": "text",
+                    "text": {
+                        "es": "Hola, soy el asistente virtual de {businessName}. 😊",
+                        "en": "Hello, I am the virtual assistant for {businessName}. 😊"
+                    }
+                },
+                {
+                    "id": "welcome_2",
+                    "type": "text",
+                    "text": {
+                        "es": "Estoy aquí para ayudarte, responder dudas o conectarte con un experto.",
+                        "en": "I'm here to help you, answer questions, or connect you with an expert."
+                    }
+                },
+                {
+                    "id": "ask_name",
+                    "type": "ask",
+                    "text": {
+                        "es": "¿Cuál es tu nombre completo?",
+                        "en": "What is your full name?"
+                    },
+                    "variable": "name"
+                },
+                {
+                    "id": "goal_router",
+                    "type": "text",
+                    "text": {
+                        "es": "Gracias, {name}. ¡Comencemos!",
+                        "en": "Thanks, {name}. Let's get started!"
+                    },
+                    "next": "flow_goal"
+                }
+            ]
+        },
+        {
+            "id": "flow_end",
+            "steps": [
+                {
+                    "id": "end_msg",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Gracias! Hemos registrado tu solicitud. Te contactaremos pronto. 👋",
+                        "en": "Thanks! We have recorded your request. We will contact you soon. 👋"
+                    }
+                },
+                {
+                    "id": "final_step",
+                    "type": "end"
+                }
+            ]
+        },
+        {
+            "id": "flow_handoff_generic",
+            "steps": [
+                {
+                    "id": "ho_1",
+                    "type": "text",
+                    "text": {
+                        "es": "Entiendo. Un asesor especializado revisará tu caso.",
+                        "en": "I understand. A specialized advisor will review your case."
+                    }
+                },
+                {
+                    "id": "ho_final",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ],
+    "global_intents": {
+        "ayuda": "main",
+        "help": "main",
+        "start": "main",
+        "hola": "main"
+    },
+    "variables": {
+        "businessName": "EiryBot Business"
+    },
+    "handoff": {
+        "summary_template": {
+            "es": "Usuario {name} interactuó en el módulo {specialty} ({goal}). Estado: Completado.",
+            "en": "User {name} interacted in {specialty} module ({goal}). Status: Completed."
+        }
+    }
+}

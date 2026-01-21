@@ -1,0 +1,102 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_intake",
+                    "type": "text",
+                    "text": {
+                        "es": "Bienvenido. Vamos a registrarte como nuevo paciente.",
+                        "en": "Welcome. Let's register you as a new patient."
+                    },
+                    "next": "flow_intake"
+                }
+            ]
+        },
+        {
+            "id": "flow_intake",
+            "steps": [
+                {
+                    "id": "intake_phone",
+                    "type": "ask",
+                    "text": {
+                        "es": "¿Cuál es tu número de teléfono móvil?",
+                        "en": "What is your mobile phone number?"
+                    },
+                    "variable": "phone"
+                },
+                {
+                    "id": "intake_reason",
+                    "type": "ask",
+                    "text": {
+                        "es": "¿Cuál es el motivo principal de tu visita? (Escribe brevemente)",
+                        "en": "What is the main reason for your visit? (Write briefly)"
+                    },
+                    "variable": "visitReason"
+                },
+                {
+                    "id": "intake_first_visit",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Has visitado alguna de nuestras sucursales antes?",
+                        "en": "Have you visited any of our branches before?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí",
+                                "en": "Yes"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No",
+                                "en": "No"
+                            }
+                        }
+                    ],
+                    "variable": "isReturningPatient"
+                },
+                {
+                    "id": "intake_pref_time",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Qué horario prefieres para tu cita?",
+                        "en": "What time do you prefer for your appointment?"
+                    },
+                    "options": [
+                        {
+                            "value": "morning",
+                            "label": {
+                                "es": "Mañana (9-13)",
+                                "en": "Morning (9-13)"
+                            }
+                        },
+                        {
+                            "value": "afternoon",
+                            "label": {
+                                "es": "Tarde (14-19)",
+                                "en": "Afternoon (14-19)"
+                            }
+                        },
+                        {
+                            "value": "saturday",
+                            "label": {
+                                "es": "Sábado",
+                                "en": "Saturday"
+                            }
+                        }
+                    ],
+                    "variable": "preferredTime"
+                },
+                {
+                    "id": "intake_handoff",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

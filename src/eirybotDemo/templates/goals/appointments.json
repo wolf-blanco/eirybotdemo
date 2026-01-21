@@ -1,0 +1,93 @@
+{
+    "flows": [
+        {
+            "id": "flow_appointments",
+            "steps": [
+                {
+                    "id": "appt_intro",
+                    "type": "text",
+                    "text": {
+                        "es": "Perfecto, vamos a gestionar esa cita. 🗓️",
+                        "en": "Perfect, let's manage that appointment. 🗓️"
+                    },
+                    "next": "flow_sched_details"
+                }
+            ]
+        },
+        {
+            "id": "flow_sched_details",
+            "steps": [
+                {
+                    "id": "ask_email",
+                    "type": "ask",
+                    "text": {
+                        "es": "Para enviarte la confirmación, ¿cuál es tu correo electrónico?",
+                        "en": "To send you the confirmation, what is your email?"
+                    },
+                    "variable": "email"
+                },
+                {
+                    "id": "ask_phone",
+                    "type": "ask",
+                    "text": {
+                        "es": "Gracias. ¿Y un teléfono de contacto para recordatorios?",
+                        "en": "Thanks. And a contact phone number for reminders?"
+                    },
+                    "variable": "phone"
+                },
+                {
+                    "id": "ask_pref_time",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Qué jornada prefieres para tu visita?",
+                        "en": "What time of day do you prefer for your visit?"
+                    },
+                    "options": [
+                        {
+                            "value": "morning",
+                            "label": {
+                                "es": "Mañana (9am - 1pm)",
+                                "en": "Morning (9am - 1pm)"
+                            }
+                        },
+                        {
+                            "value": "afternoon",
+                            "label": {
+                                "es": "Tarde (2pm - 7pm)",
+                                "en": "Afternoon (2pm - 7pm)"
+                            }
+                        },
+                        {
+                            "value": "saturday",
+                            "label": {
+                                "es": "Sábado (9am - 1pm)",
+                                "en": "Saturday (9am - 1pm)"
+                            }
+                        }
+                    ],
+                    "variable": "preferredTime"
+                },
+                {
+                    "id": "sim_check",
+                    "type": "text",
+                    "text": {
+                        "es": "Dame un segundo, estoy verificando la disponibilidad en agenda... 🔄",
+                        "en": "One second, I am checking agenda availability... 🔄"
+                    }
+                },
+                {
+                    "id": "confirm_avail",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Listo! Tenemos cupos disponibles. Un especialista te contactará en breve para fijar la hora exacta.",
+                        "en": "Done! We have slots available. A specialist will contact you shortly to fix the exact time."
+                    }
+                },
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

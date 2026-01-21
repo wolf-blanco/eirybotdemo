@@ -1,0 +1,100 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_ortho",
+                    "type": "text",
+                    "text": {
+                        "es": "Excelente decisión. La ortodoncia puede transformar tu sonrisa.",
+                        "en": "Excellent decision. Orthodontics can transform your smile."
+                    },
+                    "next": "flow_ortho"
+                }
+            ]
+        },
+        {
+            "id": "flow_ortho",
+            "steps": [
+                {
+                    "id": "ortho_phone",
+                    "type": "ask",
+                    "text": {
+                        "es": "Para empezar, ¿cuál es tu número de contacto?",
+                        "en": "To start, what is your contact number?"
+                    },
+                    "variable": "phone"
+                },
+                {
+                    "id": "ortho_age",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Para quién es el tratamiento?",
+                        "en": "Who is the treatment for?"
+                    },
+                    "options": [
+                        {
+                            "value": "child",
+                            "label": {
+                                "es": "Niño/a (<12)",
+                                "en": "Child (<12)"
+                            }
+                        },
+                        {
+                            "value": "teen",
+                            "label": {
+                                "es": "Adolescente (13-18)",
+                                "en": "Teen (13-18)"
+                            }
+                        },
+                        {
+                            "value": "adult",
+                            "label": {
+                                "es": "Adulto (18+)",
+                                "en": "Adult (18+)"
+                            }
+                        }
+                    ],
+                    "variable": "patientAgeGroup"
+                },
+                {
+                    "id": "ortho_goal",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Qué te gustaría mejorar principalmente?",
+                        "en": "What would you like to improve mainly?"
+                    },
+                    "options": [
+                        {
+                            "value": "align",
+                            "label": {
+                                "es": "Alineación / Dientes chuecos",
+                                "en": "Alignment / Crooked teeth"
+                            }
+                        },
+                        {
+                            "value": "bite",
+                            "label": {
+                                "es": "Mordida / Molestia",
+                                "en": "Bite / Discomfort"
+                            }
+                        },
+                        {
+                            "value": "esthetics",
+                            "label": {
+                                "es": "Estética General",
+                                "en": "General Aesthetics"
+                            }
+                        }
+                    ],
+                    "variable": "orthoGoal"
+                },
+                {
+                    "id": "ortho_handoff",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

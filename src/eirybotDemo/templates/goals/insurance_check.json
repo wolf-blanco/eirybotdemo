@@ -1,0 +1,109 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_insurance",
+                    "type": "text",
+                    "text": {
+                        "es": "Para verificar tu cobertura, necesito algunos datos.",
+                        "en": "To verify your coverage, I need some details."
+                    },
+                    "next": "flow_insurance"
+                }
+            ]
+        },
+        {
+            "id": "flow_insurance",
+            "steps": [
+                {
+                    "id": "ask_phone_ins",
+                    "type": "ask",
+                    "text": {
+                        "es": "¿Cuál es tu número de teléfono?",
+                        "en": "What is your phone number?"
+                    },
+                    "variable": "phone"
+                },
+                {
+                    "id": "ask_insurer",
+                    "type": "ask",
+                    "text": {
+                        "es": "¿Cuál es el nombre de tu aseguradora?",
+                        "en": "What is the name of your insurance provider?"
+                    },
+                    "variable": "insurerName"
+                },
+                {
+                    "id": "ask_consult_type",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Qué tipo de consulta necesitas?",
+                        "en": "What type of consultation do you need?"
+                    },
+                    "options": [
+                        {
+                            "value": "routine",
+                            "label": {
+                                "es": "Rutina / Limpieza",
+                                "en": "Routine / Cleaning"
+                            }
+                        },
+                        {
+                            "value": "procedure",
+                            "label": {
+                                "es": "Procedimiento (Extracción, etc)",
+                                "en": "Procedure (Extraction, etc)"
+                            }
+                        },
+                        {
+                            "value": "urgency",
+                            "label": {
+                                "es": "Urgencia",
+                                "en": "Urgency"
+                            }
+                        }
+                    ],
+                    "variable": "consultType"
+                },
+                {
+                    "id": "ask_contact_pref",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Cómo prefieres que te contactemos con la respuesta?",
+                        "en": "How do you prefer we contact you with the answer?"
+                    },
+                    "options": [
+                        {
+                            "value": "whatsapp",
+                            "label": {
+                                "es": "WhatsApp",
+                                "en": "WhatsApp"
+                            }
+                        },
+                        {
+                            "value": "call",
+                            "label": {
+                                "es": "Llamada",
+                                "en": "Call"
+                            }
+                        },
+                        {
+                            "value": "email",
+                            "label": {
+                                "es": "Correo",
+                                "en": "Email"
+                            }
+                        }
+                    ],
+                    "variable": "contactPref"
+                },
+                {
+                    "id": "ins_handoff",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

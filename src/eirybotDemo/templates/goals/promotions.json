@@ -1,0 +1,121 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_promo",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Tenemos promociones increíbles este mes!",
+                        "en": "We have amazing promotions this month!"
+                    },
+                    "next": "flow_promos"
+                }
+            ]
+        },
+        {
+            "id": "flow_promos",
+            "steps": [
+                {
+                    "id": "promo_list",
+                    "type": "text",
+                    "text": {
+                        "es": "1. Limpieza 2x1 \n 2. Blanqueamiento con 30% OFF \n 3. Valoración Ortodoncia GRATIS",
+                        "en": "1. 2x1 Cleaning \n 2. Whitening 30% OFF \n 3. FREE Ortho Assessment"
+                    }
+                },
+                {
+                    "id": "promo_interest",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Te gustaría aprovechar alguna?",
+                        "en": "Would you like to claim any of these?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "¡Sí, me interesa!",
+                                "en": "Yes, I'm interested!"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No por ahora",
+                                "en": "Not right now"
+                            }
+                        }
+                    ],
+                    "variable": "promoInterest",
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_promo_select"
+                        }
+                    ]
+                },
+                {
+                    "id": "promo_exit",
+                    "type": "text",
+                    "text": {
+                        "es": "Recibido. Aquí estaremos cuando nos necesites.",
+                        "en": "Understood. We'll be here when you need us."
+                    },
+                    "next": "final_step"
+                }
+            ]
+        },
+        {
+            "id": "flow_promo_select",
+            "steps": [
+                {
+                    "id": "promo_select",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Cuál de ellas te interesa más?",
+                        "en": "Which one are you most interested in?"
+                    },
+                    "options": [
+                        {
+                            "value": "cleaning",
+                            "label": {
+                                "es": "Limpieza 2x1",
+                                "en": "2x1 Cleaning"
+                            }
+                        },
+                        {
+                            "value": "whitening",
+                            "label": {
+                                "es": "Blanqueamiento",
+                                "en": "Whitening"
+                            }
+                        },
+                        {
+                            "value": "ortho",
+                            "label": {
+                                "es": "Ortodoncia",
+                                "en": "Ortho"
+                            }
+                        }
+                    ],
+                    "variable": "selectedPromo"
+                },
+                {
+                    "id": "promo_phone",
+                    "type": "ask",
+                    "text": {
+                        "es": "Perfecto. Déjame tu teléfono para apartar la promoción:",
+                        "en": "Perfect. Leave your phone number to reserve the promo:"
+                    },
+                    "variable": "phone"
+                },
+                {
+                    "id": "promo_handoff",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}
