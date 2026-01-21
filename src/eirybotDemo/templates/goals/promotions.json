@@ -15,7 +15,7 @@
             ]
         },
         {
-            "id": "flow_promos",
+            "id": "flow_promotions",
             "steps": [
                 {
                     "id": "promo_list",

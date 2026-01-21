@@ -15,7 +15,7 @@
             ]
         },
         {
-            "id": "flow_intake",
+            "id": "flow_patient_intake",
             "steps": [
                 {
                     "id": "intake_phone",
