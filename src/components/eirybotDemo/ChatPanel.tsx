@@ -356,7 +356,7 @@ export default function ChatPanel({ sessionId, onFinish }: ChatPanelProps) {
 
                 {/* HISTORICAL EVENTS */}
                 {events.map((ev, i) => {
-                    if (ev.type === "system" || ev.type === "system_handoff" || !ev.payload?.text) return null;
+                    if (ev.type === "system" || ev.type === "system_handoff" || !ev.payload || !(ev.payload as any).text) return null;
                     const isUser = ev.type === "user_message";
 
                     return (
