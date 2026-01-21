@@ -53,7 +53,7 @@ export interface BotEvent {
     eventId: string; // crypto.randomUUID()
     sessionId: string;
     ts: any; // Firestore Timestamp
-    type: "user_message" | "bot_message" | "system";
+    type: "user_message" | "bot_message" | "system" | "system_handoff";
     flowId?: string;
     stepId?: string;
     payload: {
