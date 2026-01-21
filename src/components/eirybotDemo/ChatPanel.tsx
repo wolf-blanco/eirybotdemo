@@ -372,7 +372,7 @@ export default function ChatPanel({ sessionId, onFinish }: ChatPanelProps) {
                                     px-4 py-2.5 text-sm leading-relaxed relative
                                     ${isUser ? activeTheme.userBubble : activeTheme.botBubble}
                                 `}>
-                                    <span className="whitespace-pre-wrap block">{interpolate(ev.payload?.text)}</span>
+                                    <span className="whitespace-pre-wrap block">{interpolate((ev.payload as any)?.text || "")}</span>
                                 </div>
 
                                 {activeSkill === 'web' && (

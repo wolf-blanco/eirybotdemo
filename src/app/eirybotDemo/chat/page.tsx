@@ -225,7 +225,8 @@ function ChatContent() {
             {/* Optional: Add a subtle doodle background pattern here if desired, kept solid for now */}
             <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 space-y-2 scroll-smooth bg-[url('/bg-pattern-dark.png')] bg-repeat opacity-95">
                 {events.map((ev, i) => {
-                    if (ev.type === "system" || ev.type === "system_handoff" || !ev.payload?.text) return null;
+                    // Force cast to avoid strict union check if type definition is lagging
+                    if ((ev.type as string) === "system" || (ev.type as string) === "system_handoff" || !ev.payload || !(ev.payload as any).text) return null;
                     const isUser = ev.type === "user_message";
 
                     return (
@@ -241,7 +242,7 @@ function ChatContent() {
                                     </div>
                                 )}
 
-                                <span className="whitespace-pre-wrap">{interpolate(ev.payload?.text)}</span>
+                                <span className="whitespace-pre-wrap">{interpolate((ev.payload as any)?.text || "")}</span>
 
                                 {/* Time checkmarks (Fake for demo) */}
                                 <div className={`text-[10px] flex justify-end items-center gap-1 mt-1 ${isUser ? "text-violet-200" : "text-slate-400"}`}>
