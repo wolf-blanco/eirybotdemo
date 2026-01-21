@@ -24,8 +24,15 @@ import orthoTemplate from "@/eirybotDemo/templates/goals/orthodontics_consult.js
 import instructionsTemplate from "@/eirybotDemo/templates/goals/post_visit_instructions.json";
 import promotionsTemplate from "@/eirybotDemo/templates/goals/promotions.json";
 
+import faqsRealEstateTemplate from "@/eirybotDemo/templates/goals/faqs_real_estate.json";
+
 // Goal mapping helper
-const getGoalTemplate = (goal: string) => {
+const getGoalTemplate = (goal: string, specialty?: string) => {
+    // Special Overrides based on Specialty
+    if (goal === "faqs" && specialty === "real_estate") {
+        return faqsRealEstateTemplate;
+    }
+
     switch (goal) {
         // Generic
         case "appointments": return appointmentsTemplate;
@@ -38,8 +45,6 @@ const getGoalTemplate = (goal: string) => {
         case "orthodontics_consult": return orthoTemplate;
         case "post_visit_instructions": return instructionsTemplate;
 
-        // TODOS: Add specific goals for Real Estate, Legal, etc later
-        // For now, fallback to generic 'appointments' or 'faqs' if specific not found
         default: return appointmentsTemplate;
     }
 };
@@ -68,12 +73,11 @@ export async function POST(request: Request) {
         if (specialtyTmpl) {
             templates.push(specialtyTmpl);
         } else if (specialty === "dental") {
-            // Fallback for legacy "dental" string if map fails
             templates.push(dentalTemplate);
         }
 
         // Add Goal Layer
-        const goalTmpl = getGoalTemplate(goal);
+        const goalTmpl = getGoalTemplate(goal, specialty);
         if (goalTmpl) {
             templates.push(goalTmpl);
         }
@@ -81,12 +85,9 @@ export async function POST(request: Request) {
         // 2. Merge
         const botInstance = mergeTemplates(templates);
 
-        // 3. Dynamic Router Patch (Crucial for Scaling)
-        // Find the 'goal_router' step in 'main' flow and update 'next' to point to the correct flow ID
+        // 3. Dynamic Router Patch
         const goalFlowId = `flow_${goal}`;
 
-        // Convention: goals should name their flow matching the goal ID OR map strictly:
-        // We know 'appointments' goal file has 'flow_appointments', etc.
         const goalFlowMap: Record<string, string> = {
             "appointments": "flow_appointments",
             "faqs": "flow_faqs",
@@ -96,7 +97,13 @@ export async function POST(request: Request) {
             "post_visit_instructions": "flow_instructions",
             "promotions": "flow_promotions"
         };
-        const targetFlow = goalFlowMap[goal] || "flow_appointments";
+
+        let targetFlow = goalFlowMap[goal] || "flow_appointments";
+
+        // Override target flow for Real Estate FAQs
+        if (specialty === "real_estate" && goal === "faqs") {
+            targetFlow = "flow_faqs_re";
+        }
 
         // Find main flow
         const mainFlow = botInstance.flows.find(f => f.id === "main");

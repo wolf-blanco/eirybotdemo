@@ -1,0 +1,179 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_faq_re",
+                    "type": "text",
+                    "text": {
+                        "es": "...",
+                        "en": "..."
+                    },
+                    "next": "flow_faqs_re"
+                }
+            ]
+        },
+        {
+            "id": "flow_faqs_re",
+            "steps": [
+                {
+                    "id": "faq_menu_re",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿Qué información buscas sobre nuestras propiedades?",
+                        "en": "What information are you looking for regarding our properties?"
+                    },
+                    "options": [
+                        {
+                            "value": "inventory",
+                            "label": {
+                                "es": "Propiedades Disponibles",
+                                "en": "Available Properties"
+                            }
+                        },
+                        {
+                            "value": "process",
+                            "label": {
+                                "es": "Proceso de Compra/Renta",
+                                "en": "Buying/Renting Process"
+                            }
+                        },
+                        {
+                            "value": "financing",
+                            "label": {
+                                "es": "Financiamiento",
+                                "en": "Financing"
+                            }
+                        },
+                        {
+                            "value": "agent",
+                            "label": {
+                                "es": "Hablar con Agente",
+                                "en": "Speak to Agent"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "inventory",
+                            "next": "flow_faq_inventory"
+                        },
+                        {
+                            "value": "process",
+                            "next": "flow_faq_process"
+                        },
+                        {
+                            "value": "financing",
+                            "next": "flow_faq_financing"
+                        },
+                        {
+                            "value": "agent",
+                            "next": "flow_faq_agent"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_inventory",
+            "steps": [
+                {
+                    "id": "ans_inv",
+                    "type": "text",
+                    "text": {
+                        "es": "Contamos con apartamentos y casas en las zonas más exclusivas. ¿Buscas comprar o rentar?",
+                        "en": "We have apartments and houses in the most exclusive areas. Are you looking to buy or rent?"
+                    },
+                    "next": "flow_loop_ask_re"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_process",
+            "steps": [
+                {
+                    "id": "ans_proc",
+                    "type": "text",
+                    "text": {
+                        "es": "El proceso es simple: visita, oferta y cierre. Nosotros te guiamos en cada paso legal.",
+                        "en": "The process is simple: visit, offer, and closing. We guide you through every legal step."
+                    },
+                    "next": "flow_loop_ask_re"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_financing",
+            "steps": [
+                {
+                    "id": "ans_fin",
+                    "type": "text",
+                    "text": {
+                        "es": "Trabajamos con los principales bancos para asegurar tu hipoteca con las mejores tasas.",
+                        "en": "We work with major banks to secure your mortgage with the best rates."
+                    },
+                    "next": "flow_loop_ask_re"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_agent",
+            "steps": [
+                {
+                    "id": "ans_agt",
+                    "type": "text",
+                    "text": {
+                        "es": "Entendido, transferiré tus datos a uno de nuestros top producers.",
+                        "en": "Understood, I will transfer your details to one of our top producers."
+                    },
+                    "next": "flow_handoff_only"
+                }
+            ]
+        },
+        {
+            "id": "flow_loop_ask_re",
+            "steps": [
+                {
+                    "id": "faq_another_re",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Te puedo ayudar con algo más?",
+                        "en": "Can I help you with anything else?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí, ver más temas",
+                                "en": "Yes, see more topics"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No, gracias",
+                                "en": "No, thanks"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_faqs_re"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_handoff_only",
+            "steps": [
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}
