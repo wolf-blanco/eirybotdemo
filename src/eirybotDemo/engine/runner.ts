@@ -34,7 +34,7 @@ export function getNextStep(
     let nextStepIndex = (currentStepIndex || 0) + 1;
     let fieldToUpdate = undefined;
     let outputMessage = undefined;
-    let status = (session.status === "active" || !session.status) ? "active" : session.status; // Default active if undefined
+    let status: "active" | "handoff_ready" | "completed" = (session.status === "active" || !session.status) ? "active" : session.status; // Default active if undefined
 
     // Process input: Input applies to the CURRENT step we are on.
     // If the current step is 'ask' and has a variable, we capture it.
