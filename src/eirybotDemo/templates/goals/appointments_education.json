@@ -1,0 +1,101 @@
+{
+    "flows": [
+        {
+            "id": "flow_appointments",
+            "steps": [
+                {
+                    "id": "appt_intro",
+                    "type": "text",
+                    "text": {
+                        "es": "Excelente interés. Coordinemos tu entrevista de admisión.",
+                        "en": "Excellent interest. Let's coordinate your admission interview."
+                    },
+                    "next": "flow_sched_details"
+                }
+            ]
+        },
+        {
+            "id": "flow_sched_details",
+            "steps": [
+                {
+                    "id": "ask_program",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿A qué programa te gustaría postular?",
+                        "en": "Which program would you like to apply to?"
+                    },
+                    "options": [
+                        {
+                            "value": "fullstack",
+                            "label": {
+                                "es": "Full Stack Dev",
+                                "en": "Full Stack Dev"
+                            }
+                        },
+                        {
+                            "value": "datascience",
+                            "label": {
+                                "es": "Data Science",
+                                "en": "Data Science"
+                            }
+                        },
+                        {
+                            "value": "uxui",
+                            "label": {
+                                "es": "Diseño UX/UI",
+                                "en": "UX/UI Design"
+                            }
+                        }
+                    ],
+                    "variable": "programInterest"
+                },
+                {
+                    "id": "ask_email",
+                    "type": "ask",
+                    "text": {
+                        "es": "Perfecto. ¿Cuál es tu correo para enviarte el brochure?",
+                        "en": "Perfect. What is your email to send you the brochure?"
+                    },
+                    "variable": "email"
+                },
+                {
+                    "id": "ask_pref_time",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Cuándo te viene mejor hablar con el asesor?",
+                        "en": "When is it best for you to speak with the advisor?"
+                    },
+                    "options": [
+                        {
+                            "value": "morning",
+                            "label": {
+                                "es": "Mañana (9-13hrs)",
+                                "en": "Morning (9-1pm)"
+                            }
+                        },
+                        {
+                            "value": "afternoon",
+                            "label": {
+                                "es": "Tarde (14-18hrs)",
+                                "en": "Afternoon (2-6pm)"
+                            }
+                        }
+                    ],
+                    "variable": "preferredTime"
+                },
+                {
+                    "id": "confirm_avail",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Anotado! Un asesor te contactará en ese horario para la entrevista online. ¡Mucho éxito!",
+                        "en": "Noted! An advisor will contact you at that time for the online interview. Good luck!"
+                    }
+                },
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

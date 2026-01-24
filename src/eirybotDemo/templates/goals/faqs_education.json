@@ -1,0 +1,190 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_faq",
+                    "type": "text",
+                    "text": {
+                        "es": "...",
+                        "en": "..."
+                    },
+                    "next": "flow_faqs_edu"
+                }
+            ]
+        },
+        {
+            "id": "flow_faqs_edu",
+            "steps": [
+                {
+                    "id": "faq_menu",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿Qué información buscas sobre nuestra oferta educativa?",
+                        "en": "What information are you looking for regarding our educational offer?"
+                    },
+                    "options": [
+                        {
+                            "value": "courses",
+                            "label": {
+                                "es": "Cursos y Programas",
+                                "en": "Courses & Programs"
+                            }
+                        },
+                        {
+                            "value": "scholarships",
+                            "label": {
+                                "es": "Becas y Financiamiento",
+                                "en": "Scholarships & Funding"
+                            }
+                        },
+                        {
+                            "value": "admissions",
+                            "label": {
+                                "es": "Proceso de Admisión",
+                                "en": "Admissions Process"
+                            }
+                        },
+                        {
+                            "value": "advisor",
+                            "label": {
+                                "es": "Hablar con Asesor",
+                                "en": "Speak to Advisor"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "courses",
+                            "next": "flow_faq_courses"
+                        },
+                        {
+                            "value": "scholarships",
+                            "next": "flow_faq_scholarships"
+                        },
+                        {
+                            "value": "admissions",
+                            "next": "flow_faq_admissions"
+                        },
+                        {
+                            "value": "advisor",
+                            "next": "flow_faq_advisor"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_courses",
+            "steps": [
+                {
+                    "id": "ans_courses",
+                    "type": "text",
+                    "text": {
+                        "es": "Ofrecemos programas intensivos en Desarrollo Full Stack, Data Science y Diseño UX/UI. Duración de 6 meses con certificación.",
+                        "en": "We offer intensive programs in Full Stack Development, Data Science, and UX/UI Design. 6 months duration with certification."
+                    },
+                    "next": "flow_loop_ask_edu"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_scholarships",
+            "steps": [
+                {
+                    "id": "ans_scholar",
+                    "type": "text",
+                    "text": {
+                        "es": "Contamos con becas de hasta el 50% por mérito académico y convenios 'Talento Digital'. También ofrecemos pago en cuotas.",
+                        "en": "We have scholarships up to 50% for academic merit and 'Digital Talent' agreements. We also offer installment payments."
+                    },
+                    "next": "flow_loop_ask_edu"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_admissions",
+            "steps": [
+                {
+                    "id": "ans_adm",
+                    "type": "text",
+                    "text": {
+                        "es": "El proceso es 100% online: completas el formulario, realizas un test de lógica y agendamos una entrevista personal.",
+                        "en": "The process is 100% online: fill out the form, take a logic test, and we schedule a personal interview."
+                    },
+                    "next": "flow_loop_ask_edu"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_advisor",
+            "steps": [
+                {
+                    "id": "ans_adv",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Perfecto! Te conectaré con un asesor de admisiones para guiarte mejor.",
+                        "en": "Perfect! I will connect you with an admissions advisor to guide you better."
+                    },
+                    "next": "flow_handoff_only"
+                }
+            ]
+        },
+        {
+            "id": "flow_loop_ask_edu",
+            "steps": [
+                {
+                    "id": "faq_another",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Te gustaría saber algo más?",
+                        "en": "Would you like to know anything else?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí, tengo otra duda",
+                                "en": "Yes, I have another question"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No, gracias",
+                                "en": "No, thanks"
+                            }
+                        },
+                        {
+                            "value": "apply",
+                            "label": {
+                                "es": "Quiero Postular",
+                                "en": "I want to Apply"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_faqs_edu"
+                        },
+                        {
+                            "value": "apply",
+                            "next": "flow_appointments"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_handoff_only",
+            "steps": [
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}

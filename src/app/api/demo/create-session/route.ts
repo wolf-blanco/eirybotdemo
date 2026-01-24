@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+// forcing rebuild for json fix
 import { db } from "@/lib/firebaseClient";
 import { doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { mergeTemplates } from "@/eirybotDemo/engine/merge";
@@ -25,12 +26,32 @@ import instructionsTemplate from "@/eirybotDemo/templates/goals/post_visit_instr
 import promotionsTemplate from "@/eirybotDemo/templates/goals/promotions.json";
 
 import faqsRealEstateTemplate from "@/eirybotDemo/templates/goals/faqs_real_estate.json";
+import faqsEducationTemplate from "@/eirybotDemo/templates/goals/faqs_education.json";
+import faqsLegalTemplate from "@/eirybotDemo/templates/goals/faqs_legal.json";
+import faqsEcommerceTemplate from "@/eirybotDemo/templates/goals/faqs_ecommerce.json";
+import promotionsEcommerceTemplate from "@/eirybotDemo/templates/goals/promotions_ecommerce.json";
+import appointmentsEducationTemplate from "@/eirybotDemo/templates/goals/appointments_education.json";
 
 // Goal mapping helper
 const getGoalTemplate = (goal: string, specialty?: string) => {
     // Special Overrides based on Specialty
-    if (goal === "faqs" && specialty === "real_estate") {
-        return faqsRealEstateTemplate;
+
+    // FAQs
+    if (goal === "faqs") {
+        if (specialty === "real_estate") return faqsRealEstateTemplate;
+        if (specialty === "education") return faqsEducationTemplate;
+        if (specialty === "legal") return faqsLegalTemplate;
+        if (specialty === "ecommerce") return faqsEcommerceTemplate;
+    }
+
+    // Promotions
+    if (goal === "promotions" && specialty === "ecommerce") {
+        return promotionsEcommerceTemplate;
+    }
+
+    // Appointments
+    if (goal === "appointments") {
+        if (specialty === "education") return appointmentsEducationTemplate;
     }
 
     switch (goal) {
@@ -82,6 +103,16 @@ export async function POST(request: Request) {
             templates.push(goalTmpl);
         }
 
+        // IMPORTANT: Always inject Appointments template if the main goal is NOT appointments,
+        // because many flows (like FAQs) Upsell to Appointments.
+        if (goal !== "appointments") {
+            const apptTmpl = getGoalTemplate("appointments", specialty);
+            if (apptTmpl) {
+                // We push it AFTER the primary goal so it's appended (or merged safely)
+                templates.push(apptTmpl);
+            }
+        }
+
         // 2. Merge
         const botInstance = mergeTemplates(templates);
 
@@ -103,6 +134,15 @@ export async function POST(request: Request) {
         // Override target flow for Real Estate FAQs
         if (specialty === "real_estate" && goal === "faqs") {
             targetFlow = "flow_faqs_re";
+        }
+        if (specialty === "education" && goal === "faqs") {
+            targetFlow = "flow_faqs_edu";
+        }
+        if (specialty === "legal" && goal === "faqs") {
+            targetFlow = "flow_faqs_legal";
+        }
+        if (specialty === "ecommerce" && goal === "faqs") {
+            targetFlow = "flow_faqs_ecom";
         }
 
         // Find main flow

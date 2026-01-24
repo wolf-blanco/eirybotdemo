@@ -1,0 +1,181 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_faq",
+                    "type": "text",
+                    "text": {
+                        "es": "...",
+                        "en": "..."
+                    },
+                    "next": "flow_faqs_legal"
+                }
+            ]
+        },
+        {
+            "id": "flow_faqs_legal",
+            "steps": [
+                {
+                    "id": "faq_menu",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿En qué área legal necesitas orientación?",
+                        "en": "In which legal area do you need guidance?"
+                    },
+                    "options": [
+                        {
+                            "value": "family",
+                            "label": {
+                                "es": "Derecho Familiar",
+                                "en": "Family Law"
+                            }
+                        },
+                        {
+                            "value": "labor",
+                            "label": {
+                                "es": "Laboral / Despidos",
+                                "en": "Labor / Dismissals"
+                            }
+                        },
+                        {
+                            "value": "corporate",
+                            "label": {
+                                "es": "Empresas / Contratos",
+                                "en": "Corporate / Contracts"
+                            }
+                        },
+                        {
+                            "value": "fees",
+                            "label": {
+                                "es": "Honorarios",
+                                "en": "Fees"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "family",
+                            "next": "flow_faq_family"
+                        },
+                        {
+                            "value": "labor",
+                            "next": "flow_faq_labor"
+                        },
+                        {
+                            "value": "corporate",
+                            "next": "flow_faq_corporate"
+                        },
+                        {
+                            "value": "fees",
+                            "next": "flow_faq_fees"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_family",
+            "steps": [
+                {
+                    "id": "ans_fam",
+                    "type": "text",
+                    "text": {
+                        "es": "Manejamos divorcios, custodia y pensiones alimenticias con total discreción.",
+                        "en": "We handle divorces, custody, and alimony with total discretion."
+                    },
+                    "next": "flow_loop_ask_legal"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_labor",
+            "steps": [
+                {
+                    "id": "ans_lab",
+                    "type": "text",
+                    "text": {
+                        "es": "Defendemos tus derechos ante despidos injustificados y acoso laboral.",
+                        "en": "We defend your rights against unjustified dismissals and workplace harassment."
+                    },
+                    "next": "flow_loop_ask_legal"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_corporate",
+            "steps": [
+                {
+                    "id": "ans_corp",
+                    "type": "text",
+                    "text": {
+                        "es": "Asesoría integral para constitución de sociedades y revisión de contratos.",
+                        "en": "Comprehensive advice for company incorporation and contract review."
+                    },
+                    "next": "flow_loop_ask_legal"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_fees",
+            "steps": [
+                {
+                    "id": "ans_fee",
+                    "type": "text",
+                    "text": {
+                        "es": "La primera consulta tiene un valor fijo. Para litigios, trabajamos con esquemas flexibles.",
+                        "en": "The first consultation has a fixed fee. For litigation, we work with flexible schemes."
+                    },
+                    "next": "flow_loop_ask_legal"
+                }
+            ]
+        },
+        {
+            "id": "flow_loop_ask_legal",
+            "steps": [
+                {
+                    "id": "faq_another",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Tienes otra consulta?",
+                        "en": "Do you have another query?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí",
+                                "en": "Yes"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No, gracias",
+                                "en": "No, thanks"
+                            }
+                        },
+                        {
+                            "value": "book",
+                            "label": {
+                                "es": "Agendar Cita",
+                                "en": "Book Appointment"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_faqs_legal"
+                        },
+                        {
+                            "value": "book",
+                            "next": "flow_appointments"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

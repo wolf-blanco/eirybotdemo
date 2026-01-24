@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firebaseClient";
-import { doc, getDoc, collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, orderBy, getDocs, updateDoc } from "firebase/firestore";
 
 // Helper to convert Firestore Timestamps to logic-friendly dates/strings
 const normalizeFirestoreData = (data: any) => {
@@ -55,5 +55,31 @@ export async function GET(request: Request, { params }: { params: Promise<{ sess
             details: error.message,
             code: error.code
         }, { status: 500 });
+    }
+}
+
+export async function PATCH(request: Request, { params }: { params: Promise<{ sessionId: string }> }) {
+    try {
+        const { sessionId } = await params;
+        const body = await request.json();
+
+        if (!sessionId) {
+            return NextResponse.json({ error: "Missing Session ID" }, { status: 400 });
+        }
+
+        const sessionRef = doc(db, "eirybot-site", "root", "eirybot_demo_sessions", sessionId);
+
+        // Only allow updating specific fields for safety
+        const updates: any = {};
+        if (body.language) updates.language = body.language;
+
+        if (Object.keys(updates).length > 0) {
+            await updateDoc(sessionRef, updates);
+        }
+
+        return NextResponse.json({ success: true });
+    } catch (error: any) {
+        console.error("Error updating session:", error);
+        return NextResponse.json({ error: "Failed to update session" }, { status: 500 });
     }
 }

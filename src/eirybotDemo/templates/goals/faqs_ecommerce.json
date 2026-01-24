@@ -1,0 +1,174 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_faq",
+                    "type": "text",
+                    "text": {
+                        "es": "...",
+                        "en": "..."
+                    },
+                    "next": "flow_faqs_ecom"
+                }
+            ]
+        },
+        {
+            "id": "flow_faqs_ecom",
+            "steps": [
+                {
+                    "id": "faq_menu",
+                    "type": "menu",
+                    "text": {
+                        "es": "¿En qué puedo ayudarte con tu pedido?",
+                        "en": "How can I help you with your order?"
+                    },
+                    "options": [
+                        {
+                            "value": "shipping",
+                            "label": {
+                                "es": "Envíos y Tiempos",
+                                "en": "Shipping & Times"
+                            }
+                        },
+                        {
+                            "value": "returns",
+                            "label": {
+                                "es": "Cambios y Devoluciones",
+                                "en": "Returns & Exchanges"
+                            }
+                        },
+                        {
+                            "value": "tracking",
+                            "label": {
+                                "es": "Rastreo de Pedido",
+                                "en": "Order Tracking"
+                            }
+                        },
+                        {
+                            "value": "support",
+                            "label": {
+                                "es": "Hablar con Soporte",
+                                "en": "Speak with Support"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "shipping",
+                            "next": "flow_faq_shipping"
+                        },
+                        {
+                            "value": "returns",
+                            "next": "flow_faq_returns"
+                        },
+                        {
+                            "value": "tracking",
+                            "next": "flow_faq_tracking"
+                        },
+                        {
+                            "value": "support",
+                            "next": "flow_faq_support"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_shipping",
+            "steps": [
+                {
+                    "id": "ans_ship",
+                    "type": "text",
+                    "text": {
+                        "es": "Despachamos a todo el país en 24-48 horas hábiles. Envío gratis en compras sobre $50.000.",
+                        "en": "We ship nationwide in 24-48 business hours. Free shipping on orders over $50,000."
+                    },
+                    "next": "flow_loop_ask_ecom"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_returns",
+            "steps": [
+                {
+                    "id": "ans_ret",
+                    "type": "text",
+                    "text": {
+                        "es": "Tienes 30 días para cambios gratis. El producto debe estar con su etiqueta original.",
+                        "en": "You have 30 days for free exchanges. Product must have original tags."
+                    },
+                    "next": "flow_loop_ask_ecom"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_tracking",
+            "steps": [
+                {
+                    "id": "ans_track",
+                    "type": "ask",
+                    "text": {
+                        "es": "Por favor ingresa tu número de orden para buscar el estado.",
+                        "en": "Please enter your order number to check status."
+                    },
+                    "variable": "orderNumber"
+                },
+                {
+                    "id": "sim_track",
+                    "type": "text",
+                    "text": {
+                        "es": "Tu pedido {orderNumber} está en ruta. Llegará mañana.",
+                        "en": "Your order {orderNumber} is on the way. Arriving tomorrow."
+                    },
+                    "next": "flow_loop_ask_ecom"
+                }
+            ]
+        },
+        {
+            "id": "flow_faq_support",
+            "steps": [
+                {
+                    "id": "handoff_step",
+                    "type": "handoff"
+                }
+            ]
+        },
+        {
+            "id": "flow_loop_ask_ecom",
+            "steps": [
+                {
+                    "id": "faq_another",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Algo más?",
+                        "en": "Anything else?"
+                    },
+                    "options": [
+                        {
+                            "value": "yes",
+                            "label": {
+                                "es": "Sí",
+                                "en": "Yes"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "No, gracias",
+                                "en": "No, thanks"
+                            }
+                        }
+                    ],
+                    "condition": [
+                        {
+                            "value": "yes",
+                            "next": "flow_faqs_ecom"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

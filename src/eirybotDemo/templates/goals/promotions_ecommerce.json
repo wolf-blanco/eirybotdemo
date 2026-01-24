@@ -1,0 +1,90 @@
+{
+    "flows": [
+        {
+            "id": "goal_router",
+            "steps": [
+                {
+                    "id": "route_promo",
+                    "type": "text",
+                    "text": {
+                        "es": "¡CyberWeek! Tenemos ofertas flash por tiempo limitado. 🔥",
+                        "en": "CyberWeek! We have flash offers for a limited time. 🔥"
+                    },
+                    "next": "flow_promos"
+                }
+            ]
+        },
+        {
+            "id": "flow_promotions",
+            "steps": [
+                {
+                    "id": "promo_list",
+                    "type": "text",
+                    "text": {
+                        "es": "1. Envío Gratis en todo \n 2. 40% OFF en Tecnología \n 3. 2x1 en Accesorios",
+                        "en": "1. Free Shipping on everything \n 2. 40% OFF Tech \n 3. 2x1 Accessories"
+                    }
+                },
+                {
+                    "id": "promo_interest",
+                    "type": "ask_choice",
+                    "text": {
+                        "es": "¿Quieres ver el catálogo de alguna?",
+                        "en": "Do you want to see the catalog for any?"
+                    },
+                    "options": [
+                        {
+                            "value": "tech",
+                            "label": {
+                                "es": "Ver Tecnología",
+                                "en": "See Tech"
+                            }
+                        },
+                        {
+                            "value": "accessories",
+                            "label": {
+                                "es": "Ver Accesorios",
+                                "en": "See Accessories"
+                            }
+                        },
+                        {
+                            "value": "no",
+                            "label": {
+                                "es": "Sólo miraba",
+                                "en": "Just looking"
+                            }
+                        }
+                    ],
+                    "variable": "selectedCategory",
+                    "condition": [
+                        {
+                            "value": "no",
+                            "next": "final_step"
+                        }
+                    ]
+                },
+                {
+                    "id": "promo_capture",
+                    "type": "ask",
+                    "text": {
+                        "es": "Para enviarte el catálogo exclusivo, ¿cuál es tu email?",
+                        "en": "To send you the exclusive catalog, what is your email?"
+                    },
+                    "variable": "email"
+                },
+                {
+                    "id": "promo_end",
+                    "type": "text",
+                    "text": {
+                        "es": "¡Enviado! Revisa tu bandeja de entrada en unos minutos.",
+                        "en": "Sent! Check your inbox in a few minutes."
+                    }
+                },
+                {
+                    "id": "promo_handoff",
+                    "type": "handoff"
+                }
+            ]
+        }
+    ]
+}
